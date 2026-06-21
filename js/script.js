@@ -48,6 +48,11 @@ document.addEventListener("DOMContentLoaded", function () {
     var formulario = document.getElementById("form-contato");
 
     if (formulario) {
+        // Se voltou do envio com sucesso, mostra o modal
+        if (window.location.search.indexOf("enviado=1") !== -1) {
+            document.getElementById("modal-sucesso").classList.add("aberto");
+        }
+
         formulario.addEventListener("submit", function (evento) {
             // Impede o envio padrão para validar os campos antes
             evento.preventDefault();
@@ -87,49 +92,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 esconderErro("erro-mensagem");
             }
 
-            // Se não teve erro, envia a mensagem para o e-mail
+            // Se não teve erro, envia o formulário de verdade
             if (!temErro) {
                 var btnEnviar = formulario.querySelector(".btn-enviar");
                 btnEnviar.disabled = true;
                 btnEnviar.textContent = "Enviando...";
 
-                // Envia os dados para o FormSubmit (serviço que encaminha para o Gmail)
-                fetch("https://formsubmit.co/ajax/ricaropfup@gmail.com", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json"
-                    },
-                    body: JSON.stringify({
-                        nome: nome,
-                        email: email,
-                        mensagem: mensagem,
-                        _subject: "Nova mensagem do portfólio",
-                        _template: "table",
-                        _replyto: email
-                    })
-                })
-                .then(function (resposta) {
-                    return resposta.json();
-                })
-                .then(function (dados) {
-                    if (dados.success === "true" || dados.success === true) {
-                        // Limpa os campos do formulário
-                        formulario.reset();
+                // Volta para esta página depois do envio
+                document.getElementById("campo-next").value = window.location.href.split("?")[0] + "?enviado=1";
+                // E-mail para responder quem enviou a mensagem
+                document.getElementById("campo-replyto").value = email;
 
-                        // Mostra a mensagem de sucesso
-                        document.getElementById("modal-sucesso").classList.add("aberto");
-                    } else {
-                        alert("Não foi possível enviar. Tente novamente mais tarde.");
-                    }
-                })
-                .catch(function () {
-                    alert("Erro ao enviar a mensagem. Verifique sua conexão e tente novamente.");
-                })
-                .finally(function () {
-                    btnEnviar.disabled = false;
-                    btnEnviar.textContent = "Enviar Mensagem";
-                });
+                // Envia o formulário para o FormSubmit
+                formulario.submit();
             }
         });
     }
