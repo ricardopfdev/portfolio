@@ -44,28 +44,24 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // --- VALIDAÇÃO DO FORMULÁRIO DE CONTATO ---
+    // --- VALIDAÇÃO E ENVIO DO FORMULÁRIO DE CONTATO ---
     var formulario = document.getElementById("form-contato");
 
     if (formulario) {
-        // Se voltou do envio com sucesso, mostra o modal
-        if (window.location.search.indexOf("enviado=1") !== -1) {
-            document.getElementById("modal-sucesso").classList.add("aberto");
-        }
-
         formulario.addEventListener("submit", function (evento) {
-            // Impede o envio padrão para validar os campos antes
             evento.preventDefault();
 
-            // Pega os valores dos campos
+            // FormSubmit/Web3Forms não funciona abrindo o arquivo direto no PC
+            if (window.location.protocol === "file:") {
+                alert("Para enviar, acesse o site online:\nhttps://ricardopfdev.github.io/portfolio/contato.html");
+                return;
+            }
+
             var nome = document.getElementById("nome").value.trim();
             var email = document.getElementById("email").value.trim();
             var mensagem = document.getElementById("mensagem").value.trim();
-
-            // Variável para saber se tem erro
             var temErro = false;
 
-            // Valida o campo nome
             if (nome === "") {
                 mostrarErro("erro-nome", "Por favor, preencha seu nome.");
                 temErro = true;
@@ -73,7 +69,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 esconderErro("erro-nome");
             }
 
-            // Valida o campo e-mail
             if (email === "") {
                 mostrarErro("erro-email", "Por favor, preencha seu e-mail.");
                 temErro = true;
@@ -84,7 +79,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 esconderErro("erro-email");
             }
 
-            // Valida o campo mensagem
             if (mensagem === "") {
                 mostrarErro("erro-mensagem", "Por favor, escreva uma mensagem.");
                 temErro = true;
@@ -92,20 +86,55 @@ document.addEventListener("DOMContentLoaded", function () {
                 esconderErro("erro-mensagem");
             }
 
-            // Se não teve erro, envia o formulário de verdade
-            if (!temErro) {
-                var btnEnviar = formulario.querySelector(".btn-enviar");
-                btnEnviar.disabled = true;
-                btnEnviar.textContent = "Enviando...";
-
-                // Volta para esta página depois do envio
-                document.getElementById("campo-next").value = window.location.href.split("?")[0] + "?enviado=1";
-                // E-mail para responder quem enviou a mensagem
-                document.getElementById("campo-replyto").value = email;
-
-                // Envia o formulário para o FormSubmit
-                formulario.submit();
+            if (temErro) {
+                return;
             }
+
+            // Verifica se a chave do Web3Forms foi configurada
+            if (typeof CHAVE_EMAIL === "undefined" || CHAVE_EMAIL === "SUBSTITUA_PELA_SUA_CHAVE") {
+                alert("Configure a chave de e-mail no arquivo js/email-config.js\nObtenha gratis em: https://web3forms.com/");
+                return;
+            }
+
+            var btnEnviar = formulario.querySelector(".btn-enviar");
+            btnEnviar.disabled = true;
+            btnEnviar.textContent = "Enviando...";
+
+            // Envia para o Web3Forms (encaminha para ricaropfup@gmail.com)
+            fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    access_key: CHAVE_EMAIL,
+                    name: nome,
+                    email: email,
+                    message: mensagem,
+                    subject: "Nova mensagem do portfólio",
+                    from_name: "Portfólio Pessoal",
+                    replyto: email
+                })
+            })
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (dados) {
+                if (dados.success) {
+                    formulario.reset();
+                    document.getElementById("modal-sucesso").classList.add("aberto");
+                } else {
+                    alert("Erro ao enviar: " + (dados.message || "Tente novamente mais tarde."));
+                }
+            })
+            .catch(function () {
+                alert("Erro de conexão. Verifique sua internet e tente novamente.");
+            })
+            .finally(function () {
+                btnEnviar.disabled = false;
+                btnEnviar.textContent = "Enviar Mensagem";
+            });
         });
     }
 
