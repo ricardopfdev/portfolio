@@ -93,23 +93,34 @@ document.addEventListener("DOMContentLoaded", function () {
                 btnEnviar.disabled = true;
                 btnEnviar.textContent = "Enviando...";
 
-                // Envia os dados do formulário para o FormSubmit
-                fetch(formulario.action, {
+                // Envia os dados para o FormSubmit (serviço que encaminha para o Gmail)
+                fetch("https://formsubmit.co/ajax/ricaropfup@gmail.com", {
                     method: "POST",
-                    body: new FormData(formulario),
                     headers: {
+                        "Content-Type": "application/json",
                         "Accept": "application/json"
-                    }
+                    },
+                    body: JSON.stringify({
+                        nome: nome,
+                        email: email,
+                        mensagem: mensagem,
+                        _subject: "Nova mensagem do portfólio",
+                        _template: "table",
+                        _replyto: email
+                    })
                 })
                 .then(function (resposta) {
-                    if (resposta.ok) {
+                    return resposta.json();
+                })
+                .then(function (dados) {
+                    if (dados.success === "true" || dados.success === true) {
                         // Limpa os campos do formulário
                         formulario.reset();
 
                         // Mostra a mensagem de sucesso
                         document.getElementById("modal-sucesso").classList.add("aberto");
                     } else {
-                        alert("Erro ao enviar a mensagem. Tente novamente mais tarde.");
+                        alert("Não foi possível enviar. Tente novamente mais tarde.");
                     }
                 })
                 .catch(function () {
