@@ -32,11 +32,14 @@
 
         <p>Preencha o formulário abaixo para entrar em contato comigo. Todos os campos são obrigatórios.</p>
 
-        <!-- Formulário de contato com validação em JavaScript -->
-        <form id="form-contato">
+        <!-- Formulário enviado pelo FormSubmit para ricardopfup@gmail.com -->
+        <form id="form-contato" action="https://formsubmit.co/ricardopfup@gmail.com" method="POST">
 
-            <!-- Campo anti-spam (fica escondido) -->
-            <input type="checkbox" name="botcheck" style="display: none;">
+            <input type="hidden" name="_subject" value="Nova mensagem do portfólio">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" id="campo-next" value="">
+            <input type="hidden" name="_replyto" id="campo-replyto" value="">
 
             <div class="campo">
                 <label for="nome">Nome:</label>
@@ -60,7 +63,6 @@
         </form>
     </main>
 
-    <!-- Modal que aparece quando o formulário é enviado com sucesso -->
     <div class="modal" id="modal-sucesso">
         <div class="modal-conteudo">
             <h2>✓ Sucesso!</h2>
@@ -74,7 +76,6 @@
         <p>&copy; 2026 - Ricardo Parada Fernandez | Portfólio Pessoal</p>
     </footer>
 
-    <script src="js/email-config.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>
