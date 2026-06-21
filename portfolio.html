@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio - Meu Portfólio</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+    <header>
+        <div class="topo">
+            <a href="index.html" class="logo">Meu Portfólio</a>
+            <div>
+                <button class="btn-menu" id="btn-menu">☰ Menu</button>
+                <button class="btn-tema" id="btn-tema">Tema Escuro</button>
+            </div>
+        </div>
+
+        <nav>
+            <ul id="menu-lista">
+                <li><a href="index.html">Sobre mim</a></li>
+                <li><a href="formacao.html">Formação</a></li>
+                <li><a href="portfolio.html" class="ativo">Portfólio</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Portfólio</h1>
+
+        <p>Abaixo estão alguns trabalhos e projetos que já realizei durante meus estudos.</p>
+
+        <!-- Cards com os projetos -->
+        <div class="portfolio-grid">
+
+            <div class="card-projeto">
+                <h3>Sistema Hortifruti</h3>
+                <p>
+                    Sistema web para gerenciamento de famílias atendidas por um
+                    projeto social de distribuição de alimentos. Desenvolvido com
+                    Java, Spring Boot e PostgreSQL.
+                </p>
+                <a href="https://github.com/ricardopfdev/hortifruti" target="_blank">Ver no GitHub →</a>
+            </div>
+
+            <div class="card-projeto">
+                <h3>Este Portfólio</h3>
+                <p>
+                    Site de portfólio pessoal desenvolvido como trabalho da
+                    disciplina de Fundamentos da Programação Web.
+                </p>
+                <a href="https://github.com/seu-usuario" target="_blank">Ver no GitHub →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 - Ricardo Parada Fernandez | Portfólio Pessoal</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

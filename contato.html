@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - Meu Portfólio</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+    <header>
+        <div class="topo">
+            <a href="index.html" class="logo">Meu Portfólio</a>
+            <div>
+                <button class="btn-menu" id="btn-menu">☰ Menu</button>
+                <button class="btn-tema" id="btn-tema">Tema Escuro</button>
+            </div>
+        </div>
+
+        <nav>
+            <ul id="menu-lista">
+                <li><a href="index.html">Sobre mim</a></li>
+                <li><a href="formacao.html">Formação</a></li>
+                <li><a href="portfolio.html">Portfólio</a></li>
+                <li><a href="contato.html" class="ativo">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Contato</h1>
+
+        <p>Preencha o formulário abaixo para entrar em contato comigo. Todos os campos são obrigatórios.</p>
+
+        <!-- Formulário de contato com validação em JavaScript -->
+        <!-- O envio é feito pelo FormSubmit (serviço gratuito para sites estáticos) -->
+        <form id="form-contato" action="https://formsubmit.co/ajax/ricaropfup@gmail.com" method="POST">
+
+            <!-- Campos extras para configurar o e-mail recebido -->
+            <input type="hidden" name="_subject" value="Nova mensagem do portfólio">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+
+            <div class="campo">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" placeholder="Digite seu nome">
+                <!-- Mensagem de erro (aparece se o campo estiver vazio) -->
+                <p class="msg-erro" id="erro-nome"></p>
+            </div>
+
+            <div class="campo">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com">
+                <p class="msg-erro" id="erro-email"></p>
+            </div>
+
+            <div class="campo">
+                <label for="mensagem">Mensagem:</label>
+                <textarea id="mensagem" name="mensagem" placeholder="Escreva sua mensagem aqui..."></textarea>
+                <p class="msg-erro" id="erro-mensagem"></p>
+            </div>
+
+            <button type="submit" class="btn-enviar">Enviar Mensagem</button>
+        </form>
+    </main>
+
+    <!-- Modal que aparece quando o formulário é enviado com sucesso -->
+    <div class="modal" id="modal-sucesso">
+        <div class="modal-conteudo">
+            <h2>✓ Sucesso!</h2>
+            <p>Mensagem enviada com sucesso!</p>
+            <p>Obrigado por entrar em contato. Em breve retornarei.</p>
+            <button class="btn-fechar" id="btn-fechar-modal">Fechar</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 - Seu Nome Aqui | Portfólio Pessoal</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
