@@ -48,15 +48,9 @@ document.addEventListener("DOMContentLoaded", function () {
     var formulario = document.getElementById("form-contato");
 
     if (formulario) {
-        // Mostra o modal se voltou após enviar com sucesso
-        if (window.location.search.indexOf("enviado=1") !== -1) {
-            document.getElementById("modal-sucesso").classList.add("aberto");
-        }
-
         formulario.addEventListener("submit", function (evento) {
             evento.preventDefault();
 
-            // Só funciona pelo site online (GitHub Pages)
             if (window.location.protocol === "file:") {
                 alert("Para enviar, acesse o site online:\nhttps://ricardopfdev.github.io/portfolio/contato.html");
                 return;
@@ -99,20 +93,51 @@ document.addEventListener("DOMContentLoaded", function () {
             btnEnviar.disabled = true;
             btnEnviar.textContent = "Enviando...";
 
-            // Volta para esta página depois do envio
-            document.getElementById("campo-next").value = window.location.href.split("?")[0] + "?enviado=1";
-            document.getElementById("campo-replyto").value = email;
+            // Monta os dados do formulário para enviar
+            var dadosForm = new FormData(formulario);
+            dadosForm.append("_replyto", email);
 
-            // Envia para ricardopfup@gmail.com via FormSubmit
-            formulario.submit();
+            fetch("https://formsubmit.co/ajax/ricardopfup@gmail.com", {
+                method: "POST",
+                body: dadosForm,
+                headers: {
+                    "Accept": "application/json"
+                }
+            })
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (dados) {
+                if (dados.success === "true" || dados.success === true) {
+                    formulario.reset();
+                    document.getElementById("modal-sucesso").classList.add("aberto");
+                } else if (dados.message && dados.message.indexOf("Activation") !== -1) {
+                    document.getElementById("modal-ativacao").classList.add("aberto");
+                } else {
+                    alert(dados.message || "Não foi possível enviar. Tente novamente.");
+                }
+            })
+            .catch(function () {
+                alert("Erro de conexão. Verifique sua internet e tente novamente.");
+            })
+            .finally(function () {
+                btnEnviar.disabled = false;
+                btnEnviar.textContent = "Enviar Mensagem";
+            });
         });
     }
 
-    // Botão para fechar o modal de sucesso
     var btnFechar = document.getElementById("btn-fechar-modal");
     if (btnFechar) {
         btnFechar.addEventListener("click", function () {
             document.getElementById("modal-sucesso").classList.remove("aberto");
+        });
+    }
+
+    var btnFecharAtivacao = document.getElementById("btn-fechar-ativacao");
+    if (btnFecharAtivacao) {
+        btnFecharAtivacao.addEventListener("click", function () {
+            document.getElementById("modal-ativacao").classList.remove("aberto");
         });
     }
 });

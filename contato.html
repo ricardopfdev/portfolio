@@ -33,13 +33,10 @@
         <p>Preencha o formulário abaixo para entrar em contato comigo. Todos os campos são obrigatórios.</p>
 
         <!-- Formulário enviado pelo FormSubmit para ricardopfup@gmail.com -->
-        <form id="form-contato" action="https://formsubmit.co/ricardopfup@gmail.com" method="POST">
+        <form id="form-contato">
 
             <input type="hidden" name="_subject" value="Nova mensagem do portfólio">
             <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_next" id="campo-next" value="">
-            <input type="hidden" name="_replyto" id="campo-replyto" value="">
 
             <div class="campo">
                 <label for="nome">Nome:</label>
@@ -69,6 +66,17 @@
             <p>Mensagem enviada com sucesso!</p>
             <p>Obrigado por entrar em contato. Em breve retornarei.</p>
             <button class="btn-fechar" id="btn-fechar-modal">Fechar</button>
+        </div>
+    </div>
+
+    <!-- Modal quando o formulário precisa ser ativado (primeira vez) -->
+    <div class="modal" id="modal-ativacao">
+        <div class="modal-conteudo">
+            <h2>Ativar formulário</h2>
+            <p>Enviamos um e-mail para <strong>ricardopfup@gmail.com</strong>.</p>
+            <p>Abra o e-mail do FormSubmit e clique em <strong>Activate Form</strong>.</p>
+            <p>Depois volte aqui e envie a mensagem novamente.</p>
+            <button class="btn-fechar" id="btn-fechar-ativacao">Entendi</button>
         </div>
     </div>
 
