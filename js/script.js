@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
             btnEnviar.disabled = true;
             btnEnviar.textContent = "Enviando...";
 
-            // Envia para o Web3Forms (encaminha para ricaropfup@gmail.com)
+            // Envia para o Web3Forms (encaminha para ricardopfup@gmail.com)
             fetch("https://api.web3forms.com/submit", {
                 method: "POST",
                 headers: {
