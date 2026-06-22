@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Página de Contato com formulário -->
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -32,14 +33,16 @@
 
         <p>Preencha o formulário abaixo para entrar em contato comigo. Todos os campos são obrigatórios.</p>
 
-        <!-- Formulário enviado pelo FormSubmit para ricardopfup@gmail.com -->
+        <!-- FORM: formulário validado pelo JavaScript e enviado pelo FormSubmit -->
         <form id="form-contato">
 
+            <!-- Campos hidden não aparecem na tela, mas vão no envio -->
             <input type="hidden" name="_subject" value="Nova mensagem do portfólio">
             <input type="hidden" name="_template" value="table">
 
             <div class="campo">
                 <label for="nome">Nome:</label>
+                <!-- id = usado pelo JavaScript | name = usado no envio -->
                 <input type="text" id="nome" name="nome" placeholder="Digite seu nome">
                 <p class="msg-erro" id="erro-nome"></p>
             </div>
@@ -60,6 +63,7 @@
         </form>
     </main>
 
+    <!-- Modal de sucesso (fica escondido até o JavaScript abrir) -->
     <div class="modal" id="modal-sucesso">
         <div class="modal-conteudo">
             <h2>✓ Sucesso!</h2>
@@ -69,7 +73,7 @@
         </div>
     </div>
 
-    <!-- Modal quando o formulário precisa ser ativado (primeira vez) -->
+    <!-- Modal de ativação (só na primeira vez que usa o FormSubmit) -->
     <div class="modal" id="modal-ativacao">
         <div class="modal-conteudo">
             <h2>Ativar formulário</h2>

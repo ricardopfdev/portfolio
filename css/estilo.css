@@ -1,9 +1,11 @@
 /* ============================================
    ESTILOS GERAIS DO PORTFÓLIO
-   Feito para a disciplina de Programação Web
+   Trabalho de Fundamentos da Programação Web
+   Autor: Ricardo Parada Fernandez
    ============================================ */
 
-/* Reset básico - tira margens padrão do navegador */
+/* * = seleciona TODOS os elementos da página */
+/* box-sizing faz padding e border entrarem na largura total */
 * {
     margin: 0;
     padding: 0;
@@ -24,7 +26,7 @@ body.tema-escuro {
     color: #eeeeee;
 }
 
-/* Cabeçalho com o menu */
+/* position: sticky faz o menu "grudar" no topo ao rolar a página */
 header {
     background-color: #2c3e50;
     padding: 15px 20px;
@@ -37,7 +39,7 @@ body.tema-escuro header {
     background-color: #16213e;
 }
 
-/* Área do topo: logo/nome + botões */
+/* display: flex coloca os itens lado a lado */
 .topo {
     display: flex;
     justify-content: space-between;
@@ -283,7 +285,7 @@ body.tema-escuro .campo textarea {
     background-color: #219a52;
 }
 
-/* Modal de sucesso (caixa que aparece após enviar) */
+/* .modal fica escondido (display: none) até o JS adicionar a classe .aberto */
 .modal {
     display: none;
     position: fixed;
@@ -343,7 +345,8 @@ body.tema-escuro footer {
 }
 
 /* ============================================
-   RESPONSIVO - telas de celular
+   RESPONSIVO - quando a tela for menor que 768px (celular)
+   @media aplica estilos só nesse tamanho de tela
    ============================================ */
 @media (max-width: 768px) {
 

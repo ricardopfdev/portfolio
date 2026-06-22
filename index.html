@@ -1,30 +1,34 @@
 <!DOCTYPE html>
+<!-- Página inicial do site (Sobre mim) -->
 <html lang="pt-br">
 <head>
+    <!-- Configurações da página -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre mim - Meu Portfólio</title>
-    <!-- Link para o arquivo CSS -->
+    <!-- Arquivo CSS que estiliza todo o site -->
     <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
 
-    <!-- Cabeçalho com menu de navegação -->
+    <!-- HEADER: fica no topo com o menu de navegação -->
     <header>
         <div class="topo">
+            <!-- Logo clicável que leva para a página inicial -->
             <a href="index.html" class="logo">Meu Portfólio</a>
 
             <div>
-                <!-- Botão do menu mobile (só aparece em celular) -->
+                <!-- Botão do menu no celular (controlado pelo JavaScript) -->
                 <button class="btn-menu" id="btn-menu">☰ Menu</button>
-                <!-- Botão para trocar tema claro/escuro -->
+                <!-- Botão que alterna entre tema claro e escuro -->
                 <button class="btn-tema" id="btn-tema">Tema Escuro</button>
             </div>
         </div>
 
-        <!-- Menu com links para as 4 páginas -->
+        <!-- NAV: menu com links para as 4 páginas do site -->
         <nav>
             <ul id="menu-lista">
+                <!-- class="ativo" destaca a página atual no menu -->
                 <li><a href="index.html" class="ativo">Sobre mim</a></li>
                 <li><a href="formacao.html">Formação</a></li>
                 <li><a href="portfolio.html">Portfólio</a></li>
@@ -33,7 +37,7 @@
         </nav>
     </header>
 
-    <!-- Conteúdo principal da página -->
+    <!-- MAIN: conteúdo principal desta página -->
     <main>
         <h1>Sobre mim</h1>
 
@@ -50,6 +54,7 @@
         </p>
 
         <h2>Meus hobbies</h2>
+        <!-- UL cria uma lista com marcadores -->
         <ul class="lista-hobbies">
             <li>Jogar videogame</li>
             <li>Andar de Bike</li>
@@ -64,12 +69,12 @@
         </p>
     </main>
 
-    <!-- Rodapé -->
+    <!-- FOOTER: rodapé que aparece em todas as páginas -->
     <footer>
         <p>&copy; 2026 - Ricardo Parada Fernandez | Portfólio Pessoal</p>
     </footer>
 
-    <!-- Link para o arquivo JavaScript -->
+    <!-- Arquivo JavaScript com as interações do site -->
     <script src="js/script.js"></script>
 </body>
 </html>

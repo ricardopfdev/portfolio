@@ -1,37 +1,43 @@
 /* ============================================
    JAVASCRIPT DO PORTFÓLIO
-   Funções de interação do site
+   Trabalho de Fundamentos da Programação Web
    ============================================ */
 
-// Espera a página carregar completamente antes de rodar o código
+// DOMContentLoaded = espera a página carregar antes de executar o código
 document.addEventListener("DOMContentLoaded", function () {
 
-    // --- MENU RESPONSIVO (celular) ---
+    // ==========================================
+    // MENU RESPONSIVO (para celular)
+    // ==========================================
     var btnMenu = document.getElementById("btn-menu");
     var menuLista = document.getElementById("menu-lista");
 
-    // Se o botão do menu existir na página, adiciona o clique
     if (btnMenu && menuLista) {
+        // Quando clicar no botão ☰ Menu...
         btnMenu.addEventListener("click", function () {
-            // Alterna a classe que mostra/esconde o menu
+            // ...adiciona ou remove a classe "menu-aberto"
+            // O CSS usa essa classe para mostrar/esconder o menu no celular
             menuLista.classList.toggle("menu-aberto");
         });
     }
 
-    // --- TEMA CLARO / ESCURO ---
+    // ==========================================
+    // TEMA CLARO / ESCURO
+    // ==========================================
     var btnTema = document.getElementById("btn-tema");
 
     if (btnTema) {
-        // Verifica se o usuário já escolheu um tema antes (salvo no navegador)
+        // localStorage guarda a preferência do usuário no navegador
         var temaSalvo = localStorage.getItem("tema");
 
+        // Se já escolheu tema escuro antes, aplica ao carregar a página
         if (temaSalvo === "escuro") {
             document.body.classList.add("tema-escuro");
             btnTema.textContent = "Tema Claro";
         }
 
         btnTema.addEventListener("click", function () {
-            // Se já está escuro, volta pro claro. Se não, fica escuro.
+            // Alterna a classe "tema-escuro" no body
             document.body.classList.toggle("tema-escuro");
 
             if (document.body.classList.contains("tema-escuro")) {
@@ -44,23 +50,30 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // --- VALIDAÇÃO E ENVIO DO FORMULÁRIO DE CONTATO ---
+    // ==========================================
+    // FORMULÁRIO DE CONTATO
+    // ==========================================
     var formulario = document.getElementById("form-contato");
 
+    // Só roda se estiver na página de contato (formulário existe)
     if (formulario) {
         formulario.addEventListener("submit", function (evento) {
+            // Impede o envio automático para validar primeiro
             evento.preventDefault();
 
+            // FormSubmit só funciona pelo site online, não abrindo o arquivo direto
             if (window.location.protocol === "file:") {
                 alert("Para enviar, acesse o site online:\nhttps://ricardopfdev.github.io/portfolio/contato.html");
                 return;
             }
 
+            // Pega o que o usuário digitou nos campos
             var nome = document.getElementById("nome").value.trim();
             var email = document.getElementById("email").value.trim();
             var mensagem = document.getElementById("mensagem").value.trim();
             var temErro = false;
 
+            // --- Validação: verifica se os campos estão preenchidos ---
             if (nome === "") {
                 mostrarErro("erro-nome", "Por favor, preencha seu nome.");
                 temErro = true;
@@ -85,18 +98,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 esconderErro("erro-mensagem");
             }
 
+            // Se encontrou erro, para aqui
             if (temErro) {
                 return;
             }
 
+            // Muda o botão para mostrar que está enviando
             var btnEnviar = formulario.querySelector(".btn-enviar");
             btnEnviar.disabled = true;
             btnEnviar.textContent = "Enviando...";
 
-            // Monta os dados do formulário para enviar
+            // FormData junta todos os campos do formulário para enviar
             var dadosForm = new FormData(formulario);
             dadosForm.append("_replyto", email);
 
+            // fetch envia os dados para o FormSubmit (serviço gratuito de e-mail)
             fetch("https://formsubmit.co/ajax/ricardopfup@gmail.com", {
                 method: "POST",
                 body: dadosForm,
@@ -109,9 +125,11 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(function (dados) {
                 if (dados.success === "true" || dados.success === true) {
+                    // Deu certo: limpa o formulário e mostra modal de sucesso
                     formulario.reset();
                     document.getElementById("modal-sucesso").classList.add("aberto");
                 } else if (dados.message && dados.message.indexOf("Activation") !== -1) {
+                    // Primeira vez: precisa ativar pelo e-mail
                     document.getElementById("modal-ativacao").classList.add("aberto");
                 } else {
                     alert(dados.message || "Não foi possível enviar. Tente novamente.");
@@ -121,12 +139,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("Erro de conexão. Verifique sua internet e tente novamente.");
             })
             .finally(function () {
+                // Volta o botão ao normal, com ou sem erro
                 btnEnviar.disabled = false;
                 btnEnviar.textContent = "Enviar Mensagem";
             });
         });
     }
 
+    // Fechar modal de sucesso
     var btnFechar = document.getElementById("btn-fechar-modal");
     if (btnFechar) {
         btnFechar.addEventListener("click", function () {
@@ -134,6 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Fechar modal de ativação
     var btnFecharAtivacao = document.getElementById("btn-fechar-ativacao");
     if (btnFecharAtivacao) {
         btnFecharAtivacao.addEventListener("click", function () {
@@ -142,21 +163,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Função que verifica se o e-mail tem formato válido
+// Verifica se o e-mail tem formato válido (ex: nome@dominio.com)
 function validarEmail(email) {
-    // Expressão regular simples para validar e-mail
     var padrao = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return padrao.test(email);
 }
 
-// Função para mostrar mensagem de erro embaixo do campo
+// Mostra mensagem de erro em vermelho embaixo do campo
 function mostrarErro(idElemento, texto) {
     var elemento = document.getElementById(idElemento);
     elemento.textContent = texto;
     elemento.style.display = "block";
 }
 
-// Função para esconder mensagem de erro
+// Esconde a mensagem de erro quando o campo está correto
 function esconderErro(idElemento) {
     var elemento = document.getElementById(idElemento);
     elemento.style.display = "none";
